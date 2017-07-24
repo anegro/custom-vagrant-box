@@ -36,65 +36,87 @@ Al final de la instalación, crear el usuario `vagrant` con clave `vagrant`.
 
 Vagrant no la necesita, pero es recomendable utilizar alguna clave conocida, por ejemplo "vagrant".
 
-    sudo passwd root
+~~~
+sudo passwd root
+~~~
 
 ## Añadir vagrant a la lista de sudoers
 
 sudo visudo -f /etc/sudoers.d/vagrant
 
-    # add vagrant user
-    vagrant ALL=(ALL) NOPASSWD:ALL
+~~~.sh
+# add vagrant user
+vagrant ALL=(ALL) NOPASSWD:ALL
+~~~
 
 ## Actualizar el sistema y reiniciar
 
-    sudo apt-get update -y
-    sudo apt-get upgrade -y
-    sudo reboot
+~~~
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo reboot
+~~~
 
 ## Instalar la clave de vagrant
 
-    mkdir -p /home/vagrant/.ssh
-    chmod 0700 /home/vagrant/.ssh
-    wget --no-check-certificate \
-        https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub \
-        -O /home/vagrant/.ssh/authorized_keys
-    chmod 0600 /home/vagrant/.ssh/authorized_keys
-    chown -R vagrant /home/vagrant/.ssh
+~~~
+mkdir -p /home/vagrant/.ssh
+chmod 0700 /home/vagrant/.ssh
+wget --no-check-certificate \
+    https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub \
+    -O /home/vagrant/.ssh/authorized_keys
+chmod 0600 /home/vagrant/.ssh/authorized_keys
+chown -R vagrant /home/vagrant/.ssh
+~~~
 
 ## Instalar y configurar el servidor SSH
 
 Instalar el servicio:
 
-    sudo apt-get install -y openssh-server
+~~~
+sudo apt-get install -y openssh-server
+~~~
 
 Editar la configuración:
 
-    sudo nano /etc/ssh/sshd_config
+~~~
+sudo nano /etc/ssh/sshd_config
+~~~
 
 Comprobar que están configuradas las líneas:
 
-    AuthorizedKeysFile %h/.ssh/authorized_keys
-    UseDNS no
+~~~
+AuthorizedKeysFile %h/.ssh/authorized_keys
+UseDNS no
+~~~
 
 Reiniciar servicio:
 
-    sudo service ssh restart
+~~~
+sudo service ssh restart
+~~~
 
 ## Instalar las *Guest Additions*
 
 Instalar kernel y cabeceras para máquinas virtuales:
 
-    sudo apt-get install -y linux-image-virtual linux-headers-virtual
+~~~
+sudo apt-get install -y linux-image-virtual linux-headers-virtual
+~~~
 
 Instalar herramientas de compilación:
 
-    sudo apt-get install -y gcc build-essential
+~~~
+sudo apt-get install -y gcc build-essential
+~~~
 
 Insertar el CD con las *Guest Additions* e instalarlas:
 
-    sudo mount /dev/cdrom /mnt 
-    cd /mnt
-    sudo ./VBoxLinuxAdditions.run
+~~~
+sudo mount /dev/cdrom /mnt 
+cd /mnt
+sudo ./VBoxLinuxAdditions.run
+~~~
 
 ## Revisar la configuración de red
 
@@ -108,7 +130,7 @@ Seguidamente, ejecutar `sudo update-grub`.
 
 Revisar el archivo `/etc/network/interfaces`:
 
-~~~
+~~~.sh
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 
@@ -133,7 +155,7 @@ iface eth3 inet manual
 
 Revisar el archivo `/etc/network/interfaces.d/eth0.cfg`:
 
-~~~
+~~~.sh
 # The primary network interface
 auto eth0
 iface eth0 inet dhcp
@@ -143,18 +165,24 @@ iface eth0 inet dhcp
 
 En primer lugar, rellenar con ceros el espacio libre:
 
-    sudo dd if=/dev/zero of=/EMPTY bs=1M
-    sudo rm -f /EMPTY
+~~~
+sudo dd if=/dev/zero of=/EMPTY bs=1M
+sudo rm -f /EMPTY
+~~~
 
 Apagar la máquina y crear la caja con el comando:
 
-    vagrant package --base vagrant-ubuntu64
+~~~
+vagrant package --base vagrant-ubuntu64
+~~~
 
 Cuando el proceso termine, se habrá creado un archivo llamado `package.box`.
 
 Opcionalmente, podemos indicar un Vagranfile personalizado:
 
-    vagrant package --base vagrant-ubuntu64 --vagrantfile myVagrantfile
+~~~
+vagrant package --base vagrant-ubuntu64 --vagrantfile myVagrantfile
+~~~
 
 Para máquinas de escritorio, un Vagranfile adecuado puede ser el siguiente:
 
@@ -201,3 +229,4 @@ end
 ## Referencias
 
 - [Building a Vagrant Box from Start to Finish](https://blog.engineyard.com/2014/building-a-vagrant-box)
+
