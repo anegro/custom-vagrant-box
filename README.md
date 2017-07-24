@@ -1,8 +1,12 @@
 # Custom Vagrant Box
 
-A continuación se resumen de todos los pasos a seguir para la preparación de una *Vagrant Box* personalizada. Como ejemplo, se crea una caja para Ubuntu.
+## Descripción
 
-**Motivación**: Las útlimas cajas publicadas por Canonical no respetan el estilo tradicional de Vagrant, entre otras cosas, al no incluir al usuario **vagrant** con clave **vagrant** ni la clave criptográfica insegura para el acceso por SSH.
+Resumen de todos los pasos necesarios para la preparación de una *Vagrant Box* personalizada. Como ejemplo, se crea una caja para Ubuntu.
+
+## Motivación
+
+Las útlimas cajas publicadas por Canonical no respetan el estilo tradicional de Vagrant, entre otras cosas, al no incluir al usuario **vagrant** con clave **vagrant** ni la clave criptográfica insegura para el acceso por SSH.
 
 ## Requisitos
 
